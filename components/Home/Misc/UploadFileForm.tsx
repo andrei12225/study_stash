@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/dialog";
 import {Button} from "@/components/ui/button";
 import {fileToBytes} from "@/lib/fileToBytes";
-import {PDFDocument} from "pdf-lib";
 import {useClerk} from "@clerk/nextjs";
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";

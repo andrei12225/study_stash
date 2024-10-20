@@ -1,4 +1,4 @@
-export function fileToBytes(file: File, callback: (bytes: Uint8Array) => any) {
+export function fileToBytes(file: File, callback: (bytes: Uint8Array) => void) {
     const reader = new FileReader();
 
     reader.onload = async function (event) {
