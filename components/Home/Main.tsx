@@ -1,6 +1,6 @@
 "use client"
 
-import {useUser} from "@clerk/nextjs";
+import {useClerk, useUser} from "@clerk/nextjs";
 import {fileRow,folderRow} from "@/lib/types";
 import {useEffect, useState} from "react";
 import BreadcrumbNav from "@/components/Home/BreadcrumbNav";
@@ -15,6 +15,7 @@ import { IoDownload } from "react-icons/io5";
 
 export default function Main() {
     const user = useUser();
+    const clerk = useClerk();
 
     const [foldersLoading, setLoading] = useState<boolean>(true);
     const [filesInFolder, setFilesInFolder] = useState<fileRow[]>([]);
@@ -65,7 +66,7 @@ export default function Main() {
             <div className={"flex justify-center gap-1 flex-col items-center h-full mt-52"}>
                 <span className={"text-5xl"}>Welcome to <span className={"font-bold"}>StudyStash!</span></span>
                 <span className={"text-2xl"}>The easiest, most convenient way of storing your notes.</span>
-                <div className={"text-xl mt-5 cursor-pointer bg-indigo-900 py-2 w-52 text-center rounded-full relative hover:scale-105 transition-all" +
+                <div onClick={() => clerk.openSignIn()} className={"text-xl mt-5 cursor-pointer bg-indigo-900 py-2 w-52 text-center rounded-full relative hover:scale-105 transition-all" +
                     " after:content-[''] after:absolute after:w-full after:h-full after:inset-0 btn-background after:-z-10 after:rounded-full after:m-3 after:hover:scale-105 after:transition-all after:hover:m-0"}>
                     Get Started
                 </div>

@@ -17,8 +17,8 @@ export default function Nav() {
             " flex items-center justify-between" +
             " border-b-2 border-b-indigo-500 rounded-b-lg"}>
             <div></div>
-            <span className={"flex gap-2 items-center text-2xl"}>
-                <CiMaximize2 className={"text-indigo-400 text-2xl"}/> StudyStash</span>
+            <a href={"/"} className={"flex gap-2 items-center text-2xl hover:cursor-pointer"}>
+                <CiMaximize2 className={"text-indigo-400 text-2xl"}/> StudyStash</a>
             <div></div>
             <div></div>
             <div></div>

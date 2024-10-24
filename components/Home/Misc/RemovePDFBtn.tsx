@@ -16,8 +16,11 @@ import {createSupabaseClient} from "@/supabase/client";
 export default function RemovePDFBtn({file}: {file: fileRow}) {
     const removePDF = async () => {
         const supabase = createSupabaseClient();
-        const {error} = await supabase.from("userfile").delete().eq("fileid", file.fileid);
-        if (error) return console.error(error);
+        const {error: errorDB} = await supabase.from("userfile").delete().eq("fileid", file.fileid);
+        if (errorDB) return console.error(errorDB);
+
+        const {error: errorS} = await supabase.storage.from("userFiles").remove([file.fileid + ".pdf"]);
+        if (errorS) return console.error(errorS);
 
         location.reload();
     }

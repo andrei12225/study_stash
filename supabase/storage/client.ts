@@ -15,7 +15,7 @@ type UploadProps = {
     fileName: string;
 }
 
-export async function uploadPdf({userId, file, bucket, fileName, userName, folderId}: UploadProps) {
+export async function uploadFile({userId, file, bucket, fileName, userName, folderId}: UploadProps) {
     const fileExtension = fileName.slice(fileName.lastIndexOf(".")+1);
     const fileId = uuidv4();
     const path = `${fileId}.${fileExtension}`;

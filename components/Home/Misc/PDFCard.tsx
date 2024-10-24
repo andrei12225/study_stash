@@ -4,14 +4,15 @@ import {fileRow} from "@/lib/types";
 import { FaFilePdf } from "react-icons/fa6";
 import { MdBookmarkAdded } from "react-icons/md";
 import RemovePDFBtn from "@/components/Home/Misc/RemovePDFBtn";
-import {useRouter} from "next/navigation";
 
 export default function PDFCard({file}: {file: fileRow}) {
-    const router = useRouter();
+    const openInNewTab = (url: string) => {
+        window.open(url, '_blank', 'noopener,noreferrer')
+    }
     return (
         <a onClick={(e) => (e.target as unknown as {
             closest: (x: string) => { id: string }
-        }).closest("div").id == "main" ? router.push(file.fileurl) : ""} className={"w-40 h-fit" +
+        }).closest("div").id == "main" ? openInNewTab(file.fileurl) : ""} className={"w-40 h-fit" +
             " bg-zinc-900 border-2 rounded-t-md border-zinc-800 " +
             " hover:scale-110 hover:cursor-pointer transition-all"}>
             <div id={"main"} className={"flex flex-col items-center justify-center w-full p-2"}>
