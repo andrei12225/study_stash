@@ -5,7 +5,6 @@ import {UserResource} from "@clerk/types";
 import React, {useState} from "react";
 import { MdOutlineTipsAndUpdates } from "react-icons/md";
 import { PiSignOutLight } from "react-icons/pi";
-import { TiUserDelete } from "react-icons/ti";
 import AccountSettingsTab from "@/components/Home/AccountSettingsTab";
 import {useClerk} from "@clerk/nextjs";
 
