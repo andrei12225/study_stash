@@ -64,8 +64,8 @@ export default function Main() {
         <div className={"w-full h-[90vh] " +
             " text-white"}>
             <div className={"flex justify-center gap-1 flex-col items-center h-full mt-52"}>
-                <span className={"text-5xl"}>Welcome to <span className={"font-bold"}>StudyStash!</span></span>
-                <span className={"text-2xl"}>The easiest, most convenient way of storing your notes.</span>
+                <span className={"text-5xl text-center"}>Welcome to <span className={"font-bold"}>StudyStash!</span></span>
+                <span className={"text-2xl text-center"}>The easiest, most convenient way of storing your notes.</span>
                 <div onClick={() => clerk.openSignIn()} className={"text-xl mt-5 cursor-pointer bg-indigo-900 py-2 w-52 text-center rounded-full relative hover:scale-105 transition-all" +
                     " after:content-[''] after:absolute after:w-full after:h-full after:inset-0 btn-background after:-z-10 after:rounded-full after:m-3 after:hover:scale-105 after:transition-all after:hover:m-0"}>
                     Get Started

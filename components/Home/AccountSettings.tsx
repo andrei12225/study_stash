@@ -22,7 +22,7 @@ export default function AccountSettings({ user }: {user: UserResource}) {
         <div className={"flex gap-2"}>
         <div className={"relative z-10"}>
             {hasClickedProfile && (
-                <div className={"w-96 h-fit absolute right-0 top-0" +
+                <div className={"w-56 lg:w-96 h-fit absolute right-0 top-0" +
                     "   opacity-100 bg-zinc-950 " +
                     "   border-2 border-blue-950 rounded-md"}>
                     <div className={"flex flex-col w-full"}>
