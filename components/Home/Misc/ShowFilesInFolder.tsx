@@ -3,6 +3,7 @@ import {PiFileDashedThin} from "react-icons/pi";
 import {GoArrowDown} from "react-icons/go";
 import UploadFileForm from "@/components/Home/Misc/UploadFileForm";
 import {fileRow, folderRow} from "@/lib/types";
+import CreateTextFileForm from "@/components/Home/Misc/CreateTextFileForm";
 
 export default function ShowFilesInFolder({folder, filesInFolder}: {folder: folderRow, filesInFolder: fileRow[]}) {
     return (
@@ -24,6 +25,7 @@ export default function ShowFilesInFolder({folder, filesInFolder}: {folder: fold
                 </div>
             }
             <UploadFileForm folder={folder} />
+            <CreateTextFileForm folder={folder} />
         </div>
     )
 }
