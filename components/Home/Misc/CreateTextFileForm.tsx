@@ -23,13 +23,15 @@ export default function CreateTextFileForm({folder}: {folder: folderRow}) {
     const [dialogOpen, setDialogOpen] = useState(false);
     const [currentText, setCurrentText] = useState("");
     const [fileName, setFileName] = useState("untitled");
+    const [fileExtension, setFileExtension] = useState("txt");
 
     async function createTextFile() {
-        const file = new Blob([currentText], {type: "text/plain"});
+        const extension = fileExtension.startsWith(".") ? fileExtension.slice(1) : fileExtension;
+        const file = new Blob([currentText], {type: `text/${extension}`});
         const fileUrl = URL.createObjectURL(file);
         const textFile = await convertBlobUrlToFile(fileUrl);
 
-        await uploadFile({userId: user.user?.id as string, userName: user.user?.username as string, folderId: folder.folderid, fileName: fileName + '.txt', file: textFile, bucket: "userFiles"});
+        await uploadFile({userId: user.user?.id as string, userName: user.user?.username as string, folderId: folder.folderid, fileName: fileName + "." + extension, file: textFile, bucket: "userFiles"});
         location.reload();
     }
 
@@ -47,12 +49,17 @@ export default function CreateTextFileForm({folder}: {folder: folderRow}) {
                         <DialogDescription>Enter your input here.</DialogDescription>
                     </DialogHeader>
                     <div className="grid gap-4">
-                        <div className={"flex gap-1"}>
-                            <Label htmlFor="name" className="text-center">
+                        <div className={"flex gap-2"}>
+                            <Label htmlFor="name" className="flex items-center">
                                File name
                             </Label>
                             <Input required={false} id="name" onChange={(e) => setFileName(e.target.value)}
                                    placeholder="Untitled" className="col-span-3"/>
+                            <Label htmlFor="extension" className="flex items-center">
+                                Extension
+                            </Label>
+                            <Input required={false} id="extension" onChange={(e) => setFileExtension(e.target.value)}
+                                   placeholder="txt" className="col-span-3"/>
                         </div>
                         <div className="w-full">
                             File content

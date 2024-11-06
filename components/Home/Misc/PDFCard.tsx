@@ -50,6 +50,11 @@ export default function PDFCard({file}: {file: fileRow}) {
             file: textFile, bucket: "userFiles", fileId: file.fileid});
         location.reload();
     }
+    const createDownloadLink = () => {
+        const extension = file.filename.split(".")[1];
+        const tFile = new Blob([curFileContent], {type: `text/${extension}`});
+        return URL.createObjectURL(tFile);
+    }
 
     return (
         <a onClick={async (e) => (e.target as unknown as {
@@ -89,6 +94,8 @@ export default function PDFCard({file}: {file: fileRow}) {
                         </div>
                     </div>
                     <DialogFooter>
+                        <a download={file.filename} href={createDownloadLink()} type="submit" className={"flex justify-center items-center px-3 text-sm cursor-pointer " +
+                            "rounded-md bg-zinc-800 hover:bg-zinc-950"}>Download</a>
                         <Button onClick={updateCurFile} type="submit"
                                 className={"bg-indigo-800 hover:bg-indigo-950"}>Update file</Button>
                     </DialogFooter>
