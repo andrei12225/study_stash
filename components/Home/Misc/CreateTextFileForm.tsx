@@ -12,14 +12,12 @@ import {Button} from "@/components/ui/button";
 import {useState} from "react";
 import {Textarea} from "@/components/ui/textarea";
 import {convertBlobUrlToFile} from "@/lib/convertBlobURLToFile";
-import {uploadFile} from "@/supabase/storage/client";
-import {useUser} from "@clerk/nextjs";
+import {uploadFile} from "@/lib/storage/upload";
 import {folderRow} from "@/lib/types";
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
 
 export default function CreateTextFileForm({folder}: {folder: folderRow}) {
-    const user = useUser();
     const [dialogOpen, setDialogOpen] = useState(false);
     const [currentText, setCurrentText] = useState("");
     const [fileName, setFileName] = useState("untitled");
@@ -31,7 +29,7 @@ export default function CreateTextFileForm({folder}: {folder: folderRow}) {
         const fileUrl = URL.createObjectURL(file);
         const textFile = await convertBlobUrlToFile(fileUrl);
 
-        await uploadFile({userId: user.user?.id as string, userName: user.user?.username as string, folderId: folder.folderid, fileName: fileName + "." + extension, file: textFile, bucket: "userFiles"});
+        await uploadFile({folderId: folder.folderid, fileName: fileName + "." + extension, file: textFile});
         location.reload();
     }
 

@@ -12,20 +12,15 @@ import {Button} from "@/components/ui/button";
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
 import {useState} from "react";
-import {useClerk} from "@clerk/nextjs";
 import { MdFolderSpecial } from "react-icons/md";
-import {createSupabaseClient} from "@/supabase/client";
-import {v4 as uuidv4} from "uuid"
+import {createFolder as createFolderAction} from "@/app/actions";
 
 export default function CreateFolderBtn() {
     const [folderName, setFolderName] = useState("");
-    const clerk = useClerk();
 
     const createFolder = async () => {
         if (folderName.length == 0) return;
-        const supabase = createSupabaseClient();
-
-        await supabase.from("userfolders").insert({folderid: uuidv4(), userid: clerk.user?.id, foldername: folderName});
+        await createFolderAction(folderName);
 
         location.reload();
     }

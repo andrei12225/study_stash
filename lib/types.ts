@@ -20,6 +20,5 @@ export type modifiedRow = {
 export type folderRow = {
     userid: string;
     folderid: string;
-    files: string;
     foldername: string;
 }

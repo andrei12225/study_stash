@@ -19,11 +19,9 @@ import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
 import {useState} from "react";
 import {convertBlobUrlToFile} from "@/lib/convertBlobURLToFile";
-import {updateFile} from "@/supabase/storage/client";
-import {useUser} from "@clerk/nextjs";
+import {updateFile} from "@/lib/storage/upload";
 
 export default function PDFCard({file}: {file: fileRow}) {
-    const user = useUser();
     const [dialogOpen, setDialogOpen] = useState(false);
     const [curFileContent, setCurFileContent] = useState("Loading content...");
     const [loadedFileContent, setLoadedFileContent] = useState(false);
@@ -44,10 +42,9 @@ export default function PDFCard({file}: {file: fileRow}) {
         const fileUrl = URL.createObjectURL(tFile);
         const textFile = await convertBlobUrlToFile(fileUrl);
 
-        await updateFile({userId: user.user?.id as string, userName: user.user?.username as string,
-            folderId: file.folderid,
+        await updateFile({
             fileName: updatedName.endsWith(".txt") ? updatedName : updatedName + ".txt",
-            file: textFile, bucket: "userFiles", fileId: file.fileid});
+            file: textFile, fileId: file.fileid});
         location.reload();
     }
     const createDownloadLink = () => {

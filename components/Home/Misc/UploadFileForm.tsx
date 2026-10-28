@@ -11,17 +11,15 @@ import {
 } from "@/components/ui/dialog";
 import {Button} from "@/components/ui/button";
 import {fileToBytes} from "@/lib/fileToBytes";
-import {useClerk} from "@clerk/nextjs";
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
 import {folderRow} from "@/lib/types";
 import {convertBlobUrlToFile} from "@/lib/convertBlobURLToFile";
-import {uploadFile} from "@/supabase/storage/client";
+import {uploadFile} from "@/lib/storage/upload";
 import imageCompression from "browser-image-compression";
 import {createPdfFromBytes} from "@/lib/createPdfFromBytes";
 
 export default function UploadFileForm({folder}: {folder: folderRow}) {
-    const user = useClerk();
     const [files, setFiles] = useState<File[]>([]);
     const [fileName, setFileName] = useState("untitled");
     const [dialogOpen, setDialogOpen] = useState(false);
@@ -61,7 +59,7 @@ export default function UploadFileForm({folder}: {folder: folderRow}) {
             const pdfFromImgsBlob = new Blob([pdfFromImgsBytes]);
             const pdfFromImgsUrl = URL.createObjectURL(pdfFromImgsBlob);
             const pdfFromImgsFile = await convertBlobUrlToFile(pdfFromImgsUrl);
-            await uploadFile({userId: user.user?.id as string, userName: user.user?.username as string, folderId: folder.folderid, fileName: fileName + ".pdf", file: pdfFromImgsFile, bucket: "userFiles"});
+            await uploadFile({folderId: folder.folderid, fileName: fileName + ".pdf", file: pdfFromImgsFile});
         }
 
         for (const otherFByte of otherFBytes) {
@@ -69,7 +67,7 @@ export default function UploadFileForm({folder}: {folder: folderRow}) {
             const otherUrl = URL.createObjectURL(otherBlob);
             const otherFile = await convertBlobUrlToFile(otherUrl);
 
-            await uploadFile({userId: user.user?.id as string, userName: user.user?.username as string, folderId: folder.folderid, fileName: otherFByte.fName, file: otherFile, bucket: "userFiles"});
+            await uploadFile({folderId: folder.folderid, fileName: otherFByte.fName, file: otherFile});
         }
 
         setExceededUploadLimit(false);

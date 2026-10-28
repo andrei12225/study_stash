@@ -11,16 +11,11 @@ import {
 import {Button} from "@/components/ui/button";
 import { MdRemove } from "react-icons/md";
 import {fileRow} from "@/lib/types";
-import {createSupabaseClient} from "@/supabase/client";
+import {deleteFile} from "@/app/actions";
 
 export default function RemovePDFBtn({file}: {file: fileRow}) {
     const removePDF = async () => {
-        const supabase = createSupabaseClient();
-        const {error: errorDB} = await supabase.from("userfile").delete().eq("fileid", file.fileid);
-        if (errorDB) return console.error(errorDB);
-
-        const {error: errorS} = await supabase.storage.from("userFiles").remove([file.fileid + ".pdf"]);
-        if (errorS) return console.error(errorS);
+        await deleteFile(file.fileid);
 
         location.reload();
     }

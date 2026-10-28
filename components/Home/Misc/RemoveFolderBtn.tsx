@@ -10,25 +10,12 @@ import {
 } from "@/components/ui/dialog";
 import {Button} from "@/components/ui/button";
 import { MdRemove } from "react-icons/md";
-import {fileRow, folderRow} from "@/lib/types";
-import {createSupabaseClient} from "@/supabase/client";
+import {folderRow} from "@/lib/types";
+import {deleteFolder} from "@/app/actions";
 
 export default function RemoveFolderBtn({folder}: {folder: folderRow}) {
     const removeFolder = async () => {
-        const supabase = createSupabaseClient();
-
-        const {error: errorSelect, data} = await supabase.from("userfile").select().eq("folderid", folder.folderid);
-        if (errorSelect) return console.error(errorSelect);
-
-        for (const file of data as fileRow[]) {
-            const fileId = file.fileid;
-            const fileSplit = file.filename.split(".");
-            const fileExt = fileSplit[fileSplit.length - 1];
-            await supabase.storage.from("userFiles").remove([fileId + '.' + fileExt]);
-        }
-
-        const {error} = await supabase.from("userfolders").delete().eq("folderid", folder.folderid);
-        if (error) return console.error(error);
+        await deleteFolder(folder.folderid);
 
         location.reload();
     }

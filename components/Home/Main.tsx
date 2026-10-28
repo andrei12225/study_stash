@@ -4,7 +4,7 @@ import {useClerk, useUser} from "@clerk/nextjs";
 import {fileRow,folderRow} from "@/lib/types";
 import {useEffect, useState} from "react";
 import BreadcrumbNav from "@/components/Home/BreadcrumbNav";
-import {createSupabaseClient} from "@/supabase/client";
+import {getFiles, getFolders} from "@/app/actions";
 import { RiNextjsFill } from "react-icons/ri";
 import ShowFilesInFolder from "@/components/Home/Misc/ShowFilesInFolder";
 import ShowCurrentFolders from "@/components/Home/Misc/ShowCurrentFolders";
@@ -24,10 +24,11 @@ export default function Main() {
 
     useEffect(() => {
         const requestFolders: () => void = async () => {
-            const supabase = createSupabaseClient();
-            const {data, error} = await supabase.from("userfolders").select().eq("userid", user?.user?.id as string);
-            if (error) return console.error(error);
-            setFolders(data); setLoading(false);
+            try {
+                setFolders(await getFolders()); setLoading(false);
+            } catch (error) {
+                console.error(error);
+            }
         }
 
         if (user.user?.id) {
@@ -41,10 +42,9 @@ export default function Main() {
             return;
         }
 
-        const supabase = createSupabaseClient();
-        const {data: folderFiles} = await supabase.from("userfile").select().eq("folderid", folder.folderid);
+        const folderFiles = await getFiles(folder.folderid);
 
-        setFolderSelected(folder); setFilesInFolder(folderFiles as unknown as fileRow[]);
+        setFolderSelected(folder); setFilesInFolder(folderFiles);
     }
 
     if (user.isSignedIn || !user.isLoaded)
