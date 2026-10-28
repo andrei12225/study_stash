@@ -6,9 +6,11 @@ import {signInWithDiscord, useSession} from "@/lib/auth-client";
 import AccountSettings from "@/components/Home/AccountSettings";
 import { PiSignIn } from "react-icons/pi";
 import CreateFolderBtn from "@/components/Home/Misc/CreateFolderBtn";
+import {usePathname} from "next/navigation";
 
 export default function Nav() {
     const {data: session, isPending} = useSession();
+    const onDashboard = usePathname() == "/dashboard";
 
     return (
         <div className={"text-white" +
@@ -22,7 +24,7 @@ export default function Nav() {
             <div></div>
             <div></div>
             <div></div>
-            {session && <CreateFolderBtn />}
+            {session && onDashboard && <CreateFolderBtn />}
             <div>
                 {isPending &&
                     <AiOutlineLoading className={"animate-spin"}></AiOutlineLoading>}

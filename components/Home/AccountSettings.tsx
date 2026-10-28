@@ -32,7 +32,7 @@ export default function AccountSettings({ user }: {user: User}) {
                         </div>
                         <div className={"bg-neutral-950 p-2"}>
                             <div className={"flex justify-evenly"}>
-                                <AccountSettingsTab icon={<PiSignOutLight/>} titleText={"Sign Out"} descriptionText={""} descriptionClass={"text-indigo-700"} onClickFunc={async () => {await signOut(); location.reload(); }}/>
+                                <AccountSettingsTab icon={<PiSignOutLight/>} titleText={"Sign Out"} descriptionText={""} descriptionClass={"text-indigo-700"} onClickFunc={async () => {await signOut(); location.href = "/"; }}/>
                             </div>
                             <div className={"border-[1px] border-zinc-900 mx-10 my-2 rounded"}></div>
                             <div className={"flex justify-center"}>

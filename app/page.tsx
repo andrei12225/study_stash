@@ -1,12 +1,11 @@
 import Nav from "@/components/Home/Nav";
-import Main from "@/components/Home/Main";
+import Landing from "@/components/Home/Landing";
 
-export default async function Home() {
-
+export default function Home() {
     return (
         <div className={"flex flex-col"}>
             <Nav />
-            <Main />
+            <Landing />
         </div>
     );
 }
