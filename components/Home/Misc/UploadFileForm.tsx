@@ -43,14 +43,15 @@ export default function UploadFileForm({folder}: {folder: folderRow}) {
         }
 
         for (let file of files) {
-            if (file.name.endsWith(".png") || file.name.endsWith(".jpg") || file.name.endsWith(".jpeg")) {
+            const name = file.name.toLowerCase();
+            if (name.endsWith(".png") || name.endsWith(".jpg") || name.endsWith(".jpeg")) {
                 if (file.size == 0) continue;
                 file = await imageCompression(file, {maxSizeMB: 1});
                 const bytes = await asyncToBytes(file);
                 imagesBytes.push(bytes);
             } else {
                 const bytes = await asyncToBytes(file);
-                if (file.name.endsWith(".pdf") || file.name.endsWith(".docx")) otherFBytes.push({fBytes: bytes, fName: file.name});
+                if (name.endsWith(".pdf") || name.endsWith(".docx")) otherFBytes.push({fBytes: bytes, fName: file.name});
             }
         }
 

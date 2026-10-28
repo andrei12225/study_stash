@@ -1,4 +1,4 @@
-import {auth} from "@clerk/nextjs/server";
+import {getSession} from "@/lib/auth";
 import {usingVercelBlob} from "@/lib/storage";
 import {readLocalFile, writeLocalFile} from "@/lib/storage/local";
 import {contentTypeFor, isStoragePath} from "@/lib/storage/paths";
@@ -27,7 +27,7 @@ export async function GET(_req: Request, {params}: Params) {
 export async function PUT(req: Request, {params}: Params) {
     const path = resolvePath(params);
     if (!path) return new Response("Not found", {status: 404});
-    if (!auth().userId) return new Response("Unauthorized", {status: 401});
+    if (!await getSession()) return new Response("Unauthorized", {status: 401});
 
     await writeLocalFile(path, Buffer.from(await req.arrayBuffer()));
     return new Response(null, {status: 204});

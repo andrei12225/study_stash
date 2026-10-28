@@ -3,7 +3,7 @@ module.exports = {
         remotePatterns: [
             {
                 protocol: 'https',
-                hostname: 'img.clerk.com',
+                hostname: 'cdn.discordapp.com',
             },
         ],
     },

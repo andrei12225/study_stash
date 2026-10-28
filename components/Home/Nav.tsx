@@ -2,14 +2,13 @@
 
 import { CiMaximize2 } from "react-icons/ci";
 import { AiOutlineLoading } from "react-icons/ai";
-import {useClerk, useUser} from "@clerk/nextjs";
+import {signInWithDiscord, useSession} from "@/lib/auth-client";
 import AccountSettings from "@/components/Home/AccountSettings";
 import { PiSignIn } from "react-icons/pi";
 import CreateFolderBtn from "@/components/Home/Misc/CreateFolderBtn";
 
 export default function Nav() {
-    const user = useUser();
-    const clerk = useClerk();
+    const {data: session, isPending} = useSession();
 
     return (
         <div className={"text-white" +
@@ -23,14 +22,14 @@ export default function Nav() {
             <div></div>
             <div></div>
             <div></div>
-            {user.isSignedIn && <CreateFolderBtn />}
+            {session && <CreateFolderBtn />}
             <div>
-                {!user.isLoaded &&
+                {isPending &&
                     <AiOutlineLoading className={"animate-spin"}></AiOutlineLoading>}
-                {user.isSignedIn &&
-                    <AccountSettings user={user.user}/>}
-                {!user.isSignedIn && user.isLoaded &&
-                    <span className={"flex gap-2 items-center hover:cursor-pointer hover:text-indigo-500"} onClick={() => clerk.openSignIn()}>
+                {session &&
+                    <AccountSettings user={session.user}/>}
+                {!session && !isPending &&
+                    <span className={"flex gap-2 items-center hover:cursor-pointer hover:text-indigo-500"} onClick={signInWithDiscord}>
                         <PiSignIn />Sign In</span>
                 }
             </div>
