@@ -63,7 +63,3 @@ Uploaded files go through a small storage interface (`lib/storage`), which picks
 - **In production**, files go to [Vercel Blob](https://vercel.com/docs/vercel-blob). Create a Blob store in your Vercel project's *Storage* tab and connect it. Vercel then sets `BLOB_READ_WRITE_TOKEN` for you.
 
 To test against Vercel Blob locally, run `vercel env pull .env.local` (or copy `BLOB_READ_WRITE_TOKEN` into `.env.local` yourself).
-
-## Screenshots
-
-![Screenshot](./screenshots/screenshot1.png)
